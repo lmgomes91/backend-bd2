@@ -41,7 +41,7 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb://localhost/backend-bd-2-dev',
+      uri: process.env.MONGODB_URI || 'mongodb://localhost/backend-bd-2-dev',
       options: {
         debug: true
       }
