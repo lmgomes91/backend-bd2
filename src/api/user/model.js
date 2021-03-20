@@ -33,8 +33,7 @@ const userSchema = new Schema({
     type: String
   },
   picture: {
-    data: Buffer,
-    contentType: String
+    type: Buffer
   }
 }, {
   timestamps: true
