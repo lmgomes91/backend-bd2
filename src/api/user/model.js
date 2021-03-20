@@ -34,6 +34,10 @@ const userSchema = new Schema({
   },
   picture: {
     type: Buffer
+  },
+  score: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true
@@ -54,10 +58,10 @@ userSchema.pre('save', function (next) {
 userSchema.methods = {
   view (full) {
     const view = {}
-    let fields = ['id', 'name', 'picture', 'email', 'phone']
+    let fields = ['id', 'name', 'picture', 'email', 'phone', 'score']
 
     if (full) {
-      fields = [...fields, 'email', 'createdAt', 'phone']
+      fields = [...fields, 'email', 'createdAt', 'phone', 'score']
     }
 
     fields.forEach((field) => { view[field] = this[field] })

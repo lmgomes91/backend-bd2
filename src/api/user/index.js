@@ -7,7 +7,7 @@ import { schema } from './model'
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, role, phone } = schema.tree
+const { email, password, name, picture, role, phone, score } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -59,6 +59,7 @@ router.get('/:id',
  * @apiParam {String} [name] User's name.
  * @apiParam {String} [picture] User's picture.
  * @apiParam {String} [phone] User's phone.
+ * @apiParam {String} [score] User's score.
  * @apiParam {String=user,admin} [role=user] User's role.
  * @apiSuccess (Sucess 201) {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -67,7 +68,7 @@ router.get('/:id',
  */
 router.post('/',
   // master(),
-  body({ email, password, name, picture, role, phone }),
+  body({ email, password, name, picture, role, phone, score }),
   create)
 
 /**
@@ -79,6 +80,7 @@ router.post('/',
  * @apiParam {String} [name] User's name.
  * @apiParam {String} [picture] User's picture.
  * @apiParam {String} [phone] User's phone.
+ * @apiParam {String} [score] User's score.
  * @apiSuccess {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 Current user or admin access only.
@@ -86,7 +88,7 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ email, name, picture, role, phone }),
+  body({ email, name, picture, role, phone, score }),
   update)
 
 /**
