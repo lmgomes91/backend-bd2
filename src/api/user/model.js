@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import mongoose, { Schema } from 'mongoose'
-import mongooseKeywords from 'mongoose-keywords'
+// import mongooseKeywords from 'mongoose-keywords'
 import { env } from '../../config'
 
 const roles = ['user', 'admin']
@@ -29,6 +29,9 @@ const userSchema = new Schema({
     enum: roles,
     default: 'user'
   },
+  phone: {
+    type: String
+  },
   picture: {
     data: Buffer,
     contentType: String
@@ -52,10 +55,10 @@ userSchema.pre('save', function (next) {
 userSchema.methods = {
   view (full) {
     const view = {}
-    let fields = ['id', 'name', 'picture']
+    let fields = ['id', 'name', 'picture', 'email', 'phone']
 
     if (full) {
-      fields = [...fields, 'email', 'createdAt']
+      fields = [...fields, 'email', 'createdAt', 'phone']
     }
 
     fields.forEach((field) => { view[field] = this[field] })
@@ -73,7 +76,7 @@ userSchema.statics = {
   roles
 }
 
-userSchema.plugin(mongooseKeywords, { paths: ['email', 'name'] })
+// userSchema.plugin(mongooseKeywords, { paths: ['email', 'name', 'phone'] })
 
 const model = mongoose.model('User', userSchema)
 

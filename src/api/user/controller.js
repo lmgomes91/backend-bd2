@@ -2,16 +2,13 @@ import { success, notFound } from '../../services/response/'
 import { User } from '.'
 import { sign } from '../../services/jwt'
 
-export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  User.count(query)
-    .then(count => User.find(query, select, cursor)
-      .then(users => ({
-        rows: users.map((user) => user.view()),
-        count
-      }))
-    )
+export const index = ({ querymen: { query, select, cursor }, body }, res, next) => {
+  console.log({ query, select, cursor, body })
+  User.find(body, select, cursor)
+    .then(users => users.map((user) => user.view()))
     .then(success(res))
     .catch(next)
+}
 
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
