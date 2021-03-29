@@ -39,3 +39,18 @@ export const destroy = ({ params }, res, next) =>
     .then((item) => item ? item.remove() : null)
     .then(success(res, 204))
     .catch(next)
+
+export const returnUserItems = async ({ bodymen: { body } }, res, next) => {
+  try {
+    if (!body.id) {
+      res.status(400).send('Missing params')
+    }
+
+    const items = await Item.find({ giver: body.id })
+
+    res.send(items)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send('Internal Server Error')
+  }
+}
