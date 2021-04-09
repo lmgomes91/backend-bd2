@@ -31,7 +31,7 @@ const itemSchema = new Schema({
     default: null
   },
   category: {
-    type: Number,
+    type: String,
     enum: ['Roupas', 'Alimentos não perecíveis', 'Brinquedos', 'Móveis', 'Eletrodomésticos', 'Outros']
   }
 }, {
