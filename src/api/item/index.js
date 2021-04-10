@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, returnUserItems } from './controller'
+import { create, index, show, update, destroy, returnUserItems, search } from './controller'
 import { schema } from './model'
 export Item, { schema } from './model'
 
@@ -88,7 +88,6 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ photos, name, description, address, usedTime, donated, giver, receiver, category }),
   update)
 
 /**
@@ -105,6 +104,7 @@ router.delete('/:id',
   token({ required: true }),
   destroy)
 
-router.post('returnUserItems', returnUserItems)
+router.post('/returnUserItems', returnUserItems)
+router.post('/search', search)
 
 export default router

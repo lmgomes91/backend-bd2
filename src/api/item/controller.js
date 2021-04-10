@@ -8,13 +8,8 @@ export const create = ({ bodymen: { body } }, res, next) =>
     .catch(next)
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  Item.count(query)
-    .then(count => Item.find(query, select, cursor)
-      .then((items) => ({
-        count,
-        rows: items.map((item) => item.view())
-      }))
-    )
+  Item.find(query, select, cursor)
+    .then(items => items.map((item) => item.view()))
     .then(success(res))
     .catch(next)
 
@@ -25,7 +20,7 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const update = ({ bodymen: { body }, params }, res, next) =>
+export const update = ({ body, params }, res, next) =>
   Item.findById(params.id)
     .then(notFound(res))
     .then((item) => item ? Object.assign(item, body).save() : null)
@@ -40,17 +35,35 @@ export const destroy = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-export const returnUserItems = async ({ bodymen: { body } }, res, next) => {
+export const returnUserItems = async ({ body }, res, next) => {
   try {
+    console.log(body)
+
     if (!body.id) {
       res.status(400).send('Missing params')
+      return
     }
 
-    const items = await Item.find({ giver: body.id })
+    const items = await Item.findOne({ giver: body.id })
 
     res.send(items)
   } catch (error) {
     console.log(error)
+    res.status(500).send('Internal Server Error')
+  }
+}
+
+export const search = async ({ body }, res, next) => {
+  try {
+    if (Object.keys(body).length === 0) {
+      res.status(400).send('Missing params')
+      return
+    }
+
+    const items = await Item.find(body)
+
+    res.send(items)
+  } catch (error) {
     res.status(500).send('Internal Server Error')
   }
 }

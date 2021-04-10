@@ -88,7 +88,6 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ email, name, picture, role, phone, score }),
   update)
 
 /**

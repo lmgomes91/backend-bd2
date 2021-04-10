@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 const itemSchema = new Schema({
   photos: {
-    type: [Buffer]
+    type: [String]
   },
   name: {
     type: String

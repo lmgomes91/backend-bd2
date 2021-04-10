@@ -33,7 +33,7 @@ const userSchema = new Schema({
     type: String
   },
   picture: {
-    type: Buffer
+    type: String
   },
   score: {
     type: Number,
